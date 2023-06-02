@@ -1,8 +1,0 @@
-[claude]
-# This is the API key for Claude
-api_key = "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"
-
-[recommender]
-name = "recommender"
-# This is the number of chunks to return
-n = 5

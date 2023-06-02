@@ -1,16 +1,45 @@
-import streamlit as st
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-from streamlit_chat import message
-import langchain
+import requests
+import json
 
-st.set_page_config(page_title=None, page_icon=None, layout="centered", initial_sidebar_state="auto", menu_items=None)
+# Define a global variable for the conversation history
+conversation_history = ""
+api_key = "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"
 
-st.sidebar.title("Media Chat")
-st.title("Media Chat")
-st.write("Welcome to Media Chat! This is a place where you can chat with other people about your favorite media. You can also see what other people are saying about your favorite media. To get started, select a media from the sidebar.")
+# Define a function to chat with AI
+def chat_with_ai(user_question, model, conversation_history):
+    # Instantiate the endpoint URL
+    url = 'https://api.anthropic.com/v1/complete'
 
+    # Define the headers for the HTTP request
+    headers = {
+        'Content-Type': 'application/json',
+        'X-API-Key': api_key,
+    }
 
-# A chatbot that uses streamlit for the UI. takes in a pdf from upload or a link and then passes the contents to langchain to get the summary. Users cna then chat with the chatbot about the contents in the pdf.
+    # Define the parameters for the request
+    params = {
+        'prompt': f'{conversation_history}\n\nHuman: {user_question}\n\nAssistant:',
+        'model': model,
+        'max_tokens_to_sample': 4000,
+        'stop_sequences': ['\n\nHuman:'],
+        'temperature': 0.8,
+        'top_p': -1,
+        'metadata': {}
+    }
 
+    # Convert the params dict to a JSON string
+    params_json = json.dumps(params)
+
+    # Send the HTTP request to the API
+    response = requests.post(url, headers=headers, data=params_json)
+
+    # Check if the request was successful
+    if response.status_code == 200:
+        # Parse the JSON response
+        response_json = response.json()
+        conversation_history += f'\n\nHuman: {user_question}\n\nAssistant: {response_json["completion"]}'
+
+        # Return the entire conversation history
+        return conversation_history
+    else:
+        return f'Error: {response.status_code}'
