@@ -1,12 +1,16 @@
+import streamlit as st
 import requests
 import json
 
 # Define a global variable for the conversation history
 conversation_history = ""
 api_key = "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"
-
+model = "claude-v1.3-100k"
 # Define a function to chat with AI
-def chat_with_ai(user_question, model, conversation_history):
+@st.cache_data # Cache the API call
+def chat_with_ai(user_question, api_key, model):
+    global conversation_history
+
     # Instantiate the endpoint URL
     url = 'https://api.anthropic.com/v1/complete'
 
@@ -43,3 +47,9 @@ def chat_with_ai(user_question, model, conversation_history):
         return conversation_history
     else:
         return f'Error: {response.status_code}'
+
+# Create the app interface
+st.title("Chat with AI")
+user_question = st.text_input("Enter your question")
+if st.button("Chat"):
+    st.write(chat_with_ai(user_question, api_key, model))
