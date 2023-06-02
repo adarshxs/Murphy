@@ -1,9 +1,0 @@
-PyMuPDF
-numpy
-toml
-scikit-learn
-tensorflow>=2.0.0
-tensorflow-hub
-claude
-streamlit>=1.21.0
-langchain-serve>=0.0.19cle
