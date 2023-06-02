@@ -6,25 +6,27 @@ import json
 import fitz
 import base64
 import os
+from PIL import Image
+
 
 conversation_history = ""
 api_key = "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"
 model = "claude-v1.3-100k"
-# Define a function to chat with AI
+# chat ke liye function
 @st.cache_data # Cache the API call
 def chat_with_ai(user_question, api_key, model):
     global conversation_history
 
-    # Instantiate the endpoint URL
+    # claude ka endpoint url
     url = 'https://api.anthropic.com/v1/complete'
 
-    # Define the headers for the HTTP request
+    # API request ke liye headers
     headers = {
         'Content-Type': 'application/json',
         'X-API-Key': api_key,
     }
 
-    # Define the parameters for the request
+    # request ke params
     params = {
         'prompt': f'{conversation_history}\n\nHuman: {user_question}\n\nAssistant:',
         'model': model,
@@ -35,10 +37,10 @@ def chat_with_ai(user_question, api_key, model):
         'metadata': {}
     }
 
-    # Convert the params dict to a JSON string
+    # param dict ko json karke
     params_json = json.dumps(params)
 
-    # Send the HTTP request to the API
+    # request bhejna
     response = requests.post(url, headers=headers, data=params_json)
 
     # Check if the request was successful
@@ -56,14 +58,10 @@ def chat_with_ai(user_question, api_key, model):
 st.title("PB & J")
 with st.sidebar:
     st.title("Bhagwaan Bharose")	
-    st.header('Bhagwaan Bharose nhi! Pb & J Bharose! :sunglasses:')
+    st.header('Bhagwaan Bharose nhi! PB & J Bharose! :sunglasses:')
     st.sidebar.image("logo.jpg", use_column_width=True)
 uploaded_file = st.file_uploader("Choose a file", type=['pdf']) 
-filepath = "test.pdf"
-text = '' # initialize text buffer
-with fitz.open(filepath) as doc: # open the pdf document
-    for page in doc: # iterate through the pages
-        text += page.get_text()
+
 
 user_question1 = st.text_input(label="Enter your question here")
 if st.button("Chat"):
