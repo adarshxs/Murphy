@@ -1,8 +1,12 @@
+# MADARCHOD BANAYA HAI
+
 import streamlit as st
 import requests
 import json
+import fitz
+import base64
+import os
 
-# Define a global variable for the conversation history
 conversation_history = ""
 api_key = "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"
 model = "claude-v1.3-100k"
@@ -41,7 +45,7 @@ def chat_with_ai(user_question, api_key, model):
     if response.status_code == 200:
         # Parse the JSON response
         response_json = response.json()
-        conversation_history += f'\n\nHuman: {user_question}\n\nAssistant: {response_json["completion"]}'
+        conversation_history += f'\n\nHuman: {user_question1}\n\nAssistant: {response_json["completion"]}'
 
         # Return the entire conversation history
         return conversation_history
@@ -49,7 +53,18 @@ def chat_with_ai(user_question, api_key, model):
         return f'Error: {response.status_code}'
 
 # Create the app interface
-st.title("Chat with AI")
-user_question = st.text_input("Enter your question")
+st.title("PB & J")
+with st.sidebar:
+    st.title("Bhagwaan Bharose")	
+    st.header('Bhagwaan Bharose nhi! Pb & J Bharose! :sunglasses:')
+    st.sidebar.image("logo.jpg", use_column_width=True)
+uploaded_file = st.file_uploader("Choose a file", type=['pdf']) 
+filepath = "test.pdf"
+text = '' # initialize text buffer
+with fitz.open(filepath) as doc: # open the pdf document
+    for page in doc: # iterate through the pages
+        text += page.get_text()
+
+user_question1 = st.text_input(label="Enter your question here")
 if st.button("Chat"):
-    st.write(chat_with_ai(user_question, api_key, model))
+    st.write(chat_with_ai(text+user_question1, api_key, model))
