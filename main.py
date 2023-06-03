@@ -62,7 +62,7 @@ with st.sidebar:
     st.sidebar.image("logo.jpg", use_column_width=True)
 uploaded_file = st.file_uploader("Choose a file", type=['pdf']) 
 
-
+text = '' # initialize text buffer
 user_question1 = st.text_input(label="Enter your question here")
 if st.button("Chat"):
     st.write(chat_with_ai(text+user_question1, api_key, model))

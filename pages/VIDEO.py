@@ -1,32 +1,29 @@
-# MADARCHOD BANAYA HAI
 
 import streamlit as st
 import requests
 import json
-import fitz
-import base64
-import os
-from PIL import Image
+from gradio_client import Client
 
+session_state = st.session_state
 
 conversation_history = ""
 api_key = "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"
 model = "claude-v1.3-100k"
-# chat ke liye function
+
 @st.cache_data # Cache the API call
 def chat_with_ai(user_question, api_key, model):
     global conversation_history
 
-    # claude ka endpoint url
+    # Instantiate the endpoint URL
     url = 'https://api.anthropic.com/v1/complete'
 
-    # API request ke liye headers
+    # Define the headers for the HTTP request
     headers = {
         'Content-Type': 'application/json',
         'X-API-Key': api_key,
     }
 
-    # request ke params
+    # Define the parameters for the request
     params = {
         'prompt': f'{conversation_history}\n\nHuman: {user_question}\n\nAssistant:',
         'model': model,
@@ -37,10 +34,10 @@ def chat_with_ai(user_question, api_key, model):
         'metadata': {}
     }
 
-    # param dict ko json karke
+    # Convert the params dict to a JSON string
     params_json = json.dumps(params)
 
-    # request bhejna
+    # Send the HTTP request to the API
     response = requests.post(url, headers=headers, data=params_json)
 
     # Check if the request was successful
@@ -54,15 +51,43 @@ def chat_with_ai(user_question, api_key, model):
     else:
         return f'Error: {response.status_code}'
 
-# Create the app interface
-st.title("PB & J")
+st.title("Murph") 
 with st.sidebar:
-    st.title("Bhagwaan Bharose")	
-    st.header('Bhagwaan Bharose nhi! PB & J Bharose! :sunglasses:')
-    st.sidebar.image("logo.jpg", use_column_width=True)
-uploaded_file = st.file_uploader("Choose a file", type=['pdf']) 
+    st.title("Bhagwaan Bharose") 
+    st.header('Bhagwaan Bharose nhi! Murph Bharose! :sunglasses:')
+    st.sidebar.image("logo.png", use_column_width=True)
 
+url = st.text_input(label="Enter a video link")
+url = str(url)
+
+API_URL = "https://sanchit-gandhi-whisper-jax.hf.space/"
+
+client = Client(API_URL)
+
+def transcribe_audio(audio_path, task="transcribe", return_timestamps=False):
+    """Function to transcribe an audio file using the Whisper JAX endpoint."""
+    text = client.predict(
+        audio_path,
+        task,
+        return_timestamps,
+        api_name="/predict_2",
+    )
+    return text
+
+if url:
+    if "transcription" not in session_state:
+        session_state.transcription = transcribe_audio(url)
+
+    if session_state.transcription:
+        output_with_timestamps = session_state.transcription
+        text = '' # Initialize text buffer
+        for i in output_with_timestamps:
+            text += i
+    else:
+        text = ''
 
 user_question1 = st.text_input(label="Enter your question here")
 if st.button("Chat"):
-    st.write(chat_with_ai(text+user_question1, api_key, model))
+    response = chat_with_ai(text + user_question1, api_key, model)
+    st.write(response)
+
