@@ -68,7 +68,7 @@ with col2:
     st.markdown("<p style = 'padding-bottom: 10%'>~Effortless Happpy Research</p>",unsafe_allow_html=True)
 with st.sidebar:
     st.title("Bhagwaan Bharose") 
-    st.header('Bhagwaan Bharose nhi! Murph Bharose! :sunglasses:')
+    st.title("Bhagwaan Bharose :sunglasses:") 
     st.sidebar.image("logo.png", use_column_width=True)
 
 uploaded_file = st.file_uploader("Choose a file", type=['pdf']) 

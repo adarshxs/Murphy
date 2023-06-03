@@ -63,8 +63,7 @@ with col2:
     st.markdown("<h1 style = 'margin-bottom:-5%;'>Mur<span style= 'color:  #7327d6;'>ph</span>🎥</h1>", unsafe_allow_html=True)
     st.markdown("<p style = 'padding-bottom: 10%'>~Effortless Happpy Research</p>",unsafe_allow_html=True)
 with st.sidebar:
-    st.title("Bhagwaan Bharose") 
-    st.header('Bhagwaan Bharose nhi! Murph Bharose! :sunglasses:')
+    st.title("Bhagwaan Bharose :sunglasses:") 
     st.sidebar.image("logo.png", use_column_width=True)
 
 url = st.text_input(label="Enter a video link")
