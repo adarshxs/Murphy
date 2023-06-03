@@ -11,7 +11,6 @@ from streamlit_chat import message
 from dotenv import load_dotenv
 
 
-
 conversation_history = ""
 load_dotenv()
 api_key = os.getenv('API_KEY')
@@ -70,8 +69,17 @@ with st.sidebar:
     st.title("Bhagwaan Bharose :sunglasses:") 
     st.sidebar.image("logo.png", use_column_width=True)
 
-uploaded_file = st.file_uploader("Choose a file", type=['pdf']) 
-text = '' # initialize text buffer
+uploaded_file = st.file_uploader("Choose a file", type=['pdf'])
+if uploaded_file is not None:
+    text = '' # initialize text buffer
+    with fitz.open(stream=uploaded_file.read(), filetype="pdf") as doc: # open the pdf document
+        for page in doc: # iterate through the pages
+            text += page.get_text() # append the text of each page to the buffer
+
+
+with open('output.txt', 'w', encoding='utf-8') as f: # open a file for writing
+    f.write(text)
+# initialize text buffer
 
 box = st.container()
 box.title("Chat Box")

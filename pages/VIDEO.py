@@ -73,7 +73,7 @@ API_URL = "https://sanchit-gandhi-whisper-jax.hf.space/"
 
 client = Client(API_URL)
 
-def transcribe_audio(audio_path, task="transcribe", return_timestamps=False):
+def transcribe_audio(audio_path, task="translate", return_timestamps=False):
     """Function to transcribe an audio file using the Whisper JAX endpoint."""
     text = client.predict(
         audio_path,
