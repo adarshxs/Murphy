@@ -2,13 +2,16 @@
 import streamlit as st
 import requests
 import json
+import os
 from gradio_client import Client
 from streamlit_chat import message
+from dotenv import load_dotenv
 
 session_state = st.session_state
 
 conversation_history = ""
-api_key = "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"
+load_dotenv()
+api_key = os.getenv('API_KEY')
 model = "claude-v1.3-100k"
 
 @st.cache_data # Cache the API call
@@ -57,7 +60,7 @@ col1,col2=st.columns([1,6])
 with col1:
     st.image("logo.png")
 with col2:
-    st.markdown("<h1 style = 'margin-bottom:-5%;'>Murph<span style= 'color:  #7327d6;'> Murph</span></h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style = 'margin-bottom:-5%;'>Murph<span style= 'color:  #7327d6;'> Murph</span>🎥</h1>", unsafe_allow_html=True)
     st.markdown("<p style = 'padding-bottom: 10%'>~Effortless Happpy Research</p>",unsafe_allow_html=True)
 with st.sidebar:
     st.title("Bhagwaan Bharose") 
