@@ -67,30 +67,33 @@ with st.sidebar:
     st.sidebar.image("logo.png", use_column_width=True)
 
 url = st.text_input(label="Enter a product link")
-url = str(url)
-
-import requests
-import json
-
-
-
-proxy = "http://d4ef75ed2404205b2ebcda7854234426b02544a8:autoparse=true@proxy.zenrows.com:8001"
-proxies = {"http": proxy, "https": proxy}
-response = requests.get(url, proxies=proxies, verify=False)
+try:
+    proxy = "http://d4ef75ed2404205b2ebcda7854234426b02544a8:autoparse=true@proxy.zenrows.com:8001"
+    proxies = {"http": proxy, "https": proxy}
+    response = requests.get(url, proxies=proxies, verify=False)
 
 
 
-text = response.text
+    text = response.text
 
 
-box = st.container()
-box.title("Chat Box")
+    box = st.container()
+    box.title("Chat Box")
 
-user_question1 = box.text_input(label="Enter your question here")
-if box.button("Chat"):
-    message(user_question1, is_user=True)
-    response = chat_with_ai(text + user_question1, api_key, model)
-    message(response, is_user=False)
+    user_question1 = box.text_input(label="Enter your question here")
+    if box.button("Chat"):
+        message(user_question1, is_user=True)
+        response = chat_with_ai(text + user_question1, api_key, model)
+        message(response, is_user=False)
+except:
+    st.write("Enter a valid link")
+
+
+
+
+
+
+
 
 
 
