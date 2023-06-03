@@ -56,7 +56,7 @@ def chat_with_ai(user_question, api_key, model):
         return conversation_history
     else:
         return f'Error: {response.status_code}'
-
+    
 # Create the app interface
 #st.title("Murph")
 col1,col2=st.columns([1,6])
@@ -69,17 +69,20 @@ with st.sidebar:
     st.title("Bhagwaan Bharose :sunglasses:") 
     st.sidebar.image("logo.png", use_column_width=True)
 
-uploaded_file = st.file_uploader("Choose a file", type=['pdf'])
-if uploaded_file is not None:
-    text = '' # initialize text buffer
-    with fitz.open(stream=uploaded_file.read(), filetype="pdf") as doc: # open the pdf document
-        for page in doc: # iterate through the pages
-            text += page.get_text() # append the text of each page to the buffer
+try:
+    uploaded_file = st.file_uploader("Choose a file", type=['pdf'])
+    if uploaded_file is not None:
+        text = '' # initialize text buffer
+        with fitz.open(stream=uploaded_file.read(), filetype="pdf") as doc: # open the pdf document
+            for page in doc: # iterate through the pages
+                text += page.get_text() # append the text of each page to the buffer
 
 
-with open('output.txt', 'w', encoding='utf-8') as f: # open a file for writing
-    f.write(text)
-# initialize text buffer
+    with open('output.txt', 'w', encoding='utf-8') as f: # open a file for writing
+        f.write(text)
+    # initialize text 
+except:
+    pass
 
 box = st.container()
 box.title("Chat Box")
