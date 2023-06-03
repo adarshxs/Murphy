@@ -3,6 +3,7 @@ import streamlit as st
 import requests
 import json
 from gradio_client import Client
+from streamlit_chat import message
 
 session_state = st.session_state
 
@@ -44,14 +45,20 @@ def chat_with_ai(user_question, api_key, model):
     if response.status_code == 200:
         # Parse the JSON response
         response_json = response.json()
-        conversation_history += f'\n\nHuman: {user_question1}\n\nAssistant: {response_json["completion"]}'
+        conversation_history += f'\n\n{response_json["completion"]}'
 
         # Return the entire conversation history
         return conversation_history
     else:
         return f'Error: {response.status_code}'
 
-st.title("Murph") 
+#st.title("Murph") 
+col1,col2=st.columns([1,6])
+with col1:
+    st.image("logo.png")
+with col2:
+    st.markdown("<h1 style = 'margin-bottom:-5%;'>Murph<span style= 'color:  #7327d6;'> Murph</span></h1>", unsafe_allow_html=True)
+    st.markdown("<p style = 'padding-bottom: 10%'>~Effortless Happpy Research</p>",unsafe_allow_html=True)
 with st.sidebar:
     st.title("Bhagwaan Bharose") 
     st.header('Bhagwaan Bharose nhi! Murph Bharose! :sunglasses:')
@@ -85,9 +92,17 @@ if url:
             text += i
     else:
         text = ''
+    st.video(url)
 
-user_question1 = st.text_input(label="Enter your question here")
-if st.button("Chat"):
+box = st.container()
+box.title("Chat Box")
+
+user_question1 = box.text_input(label="Enter your question here")
+if box.button("Chat"):
+    message(user_question1, is_user=True)
     response = chat_with_ai(text + user_question1, api_key, model)
-    st.write(response)
+    message(response, is_user=False)
+
+
+
 

@@ -7,6 +7,7 @@ import fitz
 import base64
 import os
 from PIL import Image
+from streamlit_chat import message
 
 
 conversation_history = ""
@@ -55,14 +56,26 @@ def chat_with_ai(user_question, api_key, model):
         return f'Error: {response.status_code}'
 
 # Create the app interface
-st.title("Murph")
+#st.title("Murph")
+col1,col2=st.columns([1,6])
+with col1:
+    st.image("logo.png")
+with col2:
+    st.markdown("<h1 style = 'margin-bottom:-5%;'>Murph<span style= 'color:  #7327d6;'> Murph</span></h1>", unsafe_allow_html=True)
+    st.markdown("<p style = 'padding-bottom: 10%'>~Effortless Happpy Research</p>",unsafe_allow_html=True)
 with st.sidebar:
-    st.title("Bhagwaan Bharose")	
+    st.title("Bhagwaan Bharose") 
     st.header('Bhagwaan Bharose nhi! Murph Bharose! :sunglasses:')
     st.sidebar.image("logo.png", use_column_width=True)
+
 uploaded_file = st.file_uploader("Choose a file", type=['pdf']) 
 text = '' # initialize text buffer
 
-user_question1 = st.text_input(label="Enter your question here")
-if st.button("Chat"):
-    st.write(chat_with_ai(text+user_question1, api_key, model))
+box = st.container()
+box.title("Chat Box")
+
+user_question1 = box.text_input(label="Enter your question here")
+if box.button("Chat"):
+    message(user_question1, is_user=True)
+    response = chat_with_ai(text + user_question1, api_key, model)
+    message(response, is_user=False)
