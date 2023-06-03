@@ -10,3 +10,6 @@ def PDF():
 
 def VIDEO():
     st.write("VIDEO SHIT")
+
+def LINKS():
+    st.write("LINKS SHIT")

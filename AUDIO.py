@@ -60,15 +60,15 @@ col1,col2=st.columns([1,6])
 with col1:
     st.image("logo.png")
 with col2:
-    st.markdown("<h1 style = 'margin-bottom:-5%;'>Mur<span style= 'color:  #7327d6;'>ph</span>🎥</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style = 'margin-bottom:-5%;'>Murph<span style= 'color:  #7327d6;'> Murph</span>🎥</h1>", unsafe_allow_html=True)
     st.markdown("<p style = 'padding-bottom: 10%'>~Effortless Happpy Research</p>",unsafe_allow_html=True)
 with st.sidebar:
     st.title("Bhagwaan Bharose") 
     st.header('Bhagwaan Bharose nhi! Murph Bharose! :sunglasses:')
     st.sidebar.image("logo.png", use_column_width=True)
 
-url = st.text_input(label="Enter a video link")
-url = str(url)
+uploaded_file = st.file_uploader("Choose a file")
+upload = st.audio(uploaded_file, format='audio/mp3')
 
 API_URL = "https://sanchit-gandhi-whisper-jax.hf.space/"
 
@@ -80,13 +80,13 @@ def transcribe_audio(audio_path, task="transcribe", return_timestamps=False):
         audio_path,
         task,
         return_timestamps,
-        api_name="/predict_2",
+        api_name="/predict_1",
     )
     return text
 
-if url:
+if upload:
     if "transcription" not in session_state:
-        session_state.transcription = transcribe_audio(url)
+        session_state.transcription = transcribe_audio("audio.mp3")
 
     if session_state.transcription:
         output_with_timestamps = session_state.transcription
@@ -95,7 +95,7 @@ if url:
             text += i
     else:
         text = ''
-    st.video(url)
+    st.video(upload)
 
 box = st.container()
 box.title("Chat Box")

@@ -60,42 +60,29 @@ col1,col2=st.columns([1,6])
 with col1:
     st.image("logo.png")
 with col2:
-    st.markdown("<h1 style = 'margin-bottom:-5%;'>Mur<span style= 'color:  #7327d6;'>ph</span>🎥</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style = 'margin-bottom:-5%;'>Mur<span style= 'color:  #7327d6;'>ph</span>🔗</h1>", unsafe_allow_html=True)
     st.markdown("<p style = 'padding-bottom: 10%'>~Effortless Happpy Research</p>",unsafe_allow_html=True)
 with st.sidebar:
     st.title("Bhagwaan Bharose") 
     st.header('Bhagwaan Bharose nhi! Murph Bharose! :sunglasses:')
     st.sidebar.image("logo.png", use_column_width=True)
 
-url = st.text_input(label="Enter a video link")
+url = st.text_input(label="Enter a product link")
 url = str(url)
 
-API_URL = "https://sanchit-gandhi-whisper-jax.hf.space/"
+import requests
+import json
 
-client = Client(API_URL)
 
-def transcribe_audio(audio_path, task="transcribe", return_timestamps=False):
-    """Function to transcribe an audio file using the Whisper JAX endpoint."""
-    text = client.predict(
-        audio_path,
-        task,
-        return_timestamps,
-        api_name="/predict_2",
-    )
-    return text
 
-if url:
-    if "transcription" not in session_state:
-        session_state.transcription = transcribe_audio(url)
+proxy = "http://d4ef75ed2404205b2ebcda7854234426b02544a8:autoparse=true@proxy.zenrows.com:8001"
+proxies = {"http": proxy, "https": proxy}
+response = requests.get(url, proxies=proxies, verify=False)
 
-    if session_state.transcription:
-        output_with_timestamps = session_state.transcription
-        text = '' # Initialize text buffer
-        for i in output_with_timestamps:
-            text += i
-    else:
-        text = ''
-    st.video(url)
+
+
+text = response.text
+
 
 box = st.container()
 box.title("Chat Box")
