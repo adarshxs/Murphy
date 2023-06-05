@@ -66,7 +66,7 @@ with st.sidebar:
     st.title("Bhagwaan Bharose :sunglasses:") 
     st.sidebar.image("logo.png", use_column_width=True)
 
-url = st.text_input(label="Enter a video link")
+url = st.text_input(label="Enter a video link and wait for some time until the video preview loads!")
 url = str(url)
 
 API_URL = "https://sanchit-gandhi-whisper-jax.hf.space/"

@@ -2,13 +2,15 @@ import streamlit as st
 from streamlit_chat import message
 
 
-st.set_page_config(page_title="Murph", page_icon="📖")
+st.set_page_config(page_title="Murph", page_icon="logo.png")
 col1,col2=st.columns([1,6])
 with col1:
     st.image("logo.png")
 with col2:
     st.markdown("<h1 style = 'margin-bottom:-5%;'>Mur<span style= 'color:  #7327d6;'>ph</span></h1>", unsafe_allow_html=True)
     st.markdown("<p style = 'padding-bottom: 10%'>~LOL</p>",unsafe_allow_html=True)
+
+st.write("Ever had long complicated documents, complicated and boring YouTube videos that you have to go through? Well, we have a solution for you. Murph is a tool that helps you talk to you documents, videos, and even E-Commerce products, all at one place!")
 st.write("![Your Awsome GIF](https://media.giphy.com/media/3ohzdIuqJoo8QdKlnW/giphy.gif)")
          
 
