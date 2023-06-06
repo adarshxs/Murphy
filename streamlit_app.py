@@ -11,6 +11,7 @@ with col2:
     st.markdown("<p style = 'padding-bottom: 10%'>~LOL</p>",unsafe_allow_html=True)
 
 st.write("Ever had long complicated documents, complicated and boring YouTube videos that you have to go through? Well, we have a solution for you. Murph is a tool that helps you talk to you documents, videos, and even E-Commerce products, all at one place!")
+st.image("banner.jpg")
 st.write("![Your Awsome GIF](https://media.giphy.com/media/3ohzdIuqJoo8QdKlnW/giphy.gif)")
          
 
