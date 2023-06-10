@@ -3,6 +3,11 @@ from streamlit_chat import message
 
 
 st.set_page_config(page_title="Murph", page_icon="logo.png")
+
+with st.sidebar:    
+    st.write("Follow me on Instagram [@adarsh.py](https://www.instagram.com/adarsh.py/)!")
+    st.warning("This app is still in development. Please report any bugs or issues.")
+
 col1,col2=st.columns([1,6])
 with col1:
     st.image("logo.png")
