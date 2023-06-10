@@ -9,6 +9,9 @@ from dotenv import load_dotenv
 
 session_state = st.session_state
 
+with st.sidebar:    
+    st.write("Follow me on Instagram [@adarsh.py](https://www.instagram.com/adarsh.py/)!")
+    st.warning("This app is still in development. Please report any bugs or issues.")
 conversation_history = ""
 load_dotenv()
 api_key = os.getenv('API_KEY')
